@@ -3,7 +3,7 @@ import type { UpdateContactDTO } from '../dtos/UpdateContactDTO.js';
 import type { Contact } from '../entities/Contact.js';
 
 export interface IContactRepository {
-  findAll(): Promise<Contact[] | null>;
+  findAll(orderBy: string): Promise<Contact[] | null>;
   findById(id: string): Promise<Contact | null>
   findByEmail(email: string): Promise<Contact | null>
   create(createContactDto: CreateContactDTO): Promise<Contact>

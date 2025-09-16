@@ -1,13 +1,17 @@
-import { query } from '../../database/index.js';
+import { query } from '../../../database/index.js';
 import type { CreateContactDTO } from './dtos/CreateContactDTO.js';
 import type { UpdateContactDTO } from './dtos/UpdateContactDTO.js';
 import type { Contact } from './entities/Contact.js';
 import type { IContactRepository } from './interfaces/IContactRepository.js';
 
 class ContactRepository implements IContactRepository {
-  async findAll(): Promise<Contact[] | null> {
+  async findAll(orderBy: string = 'asc'): Promise<Contact[] | null> {
+    const direction = orderBy.toUpperCase() === 'DESC' ? 'DESC' : 'ASC';
     const rows = await query<Contact>(`
-      SELECT * FROM contacts
+      SELECT contacts.*, categories.name AS category_name FROM contacts
+      LEFT JOIN categories
+      ON categories.id = contacts.category_id
+      ORDER BY contacts.name ${direction}
     `);
     return rows ?? null;
   }

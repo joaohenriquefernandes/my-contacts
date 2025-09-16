@@ -1,8 +1,12 @@
 import type { Request, Response } from 'express';
-import ContactRepository from '../repositories/ContactRepository.js';
+import ContactRepository from '../repositories/contact/ContactRepository.js';
 
 type Params = {
   id: string
+}
+
+type Query = {
+  orderBy: string;
 }
 
 type Body = {
@@ -13,8 +17,10 @@ type Body = {
 }
 
 class ContactController {
-  index(request: Request, response: Response) {
-    response.send('Hello');
+  async index(request: Request<unknown, unknown, unknown, Query>, response: Response) {
+    const { orderBy } = request.query;
+    const contacts = await ContactRepository.findAll(orderBy);
+    return response.json({ contacts });
   }
 
   async show(request: Request<Params>, response: Response) {
