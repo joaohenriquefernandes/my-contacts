@@ -18,7 +18,9 @@ class ContactRepository implements IContactRepository {
 
   async findById(id: string): Promise<Contact | null> {
     const [row] = await query<Contact>(`
-      SELECT * FROM contacts
+      SELECT contacts.*, categories.name AS category_name FROM contacts
+      LEFT JOIN categories
+      ON categories.id = contacts.category_id
       WHERE contacts.id = $1
     `, [id]);
     return row ?? null;
