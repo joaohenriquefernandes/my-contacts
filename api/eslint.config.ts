@@ -9,6 +9,7 @@ export default defineConfig([
     extends: ['js/recommended'],
     languageOptions: { globals: globals.node },
     rules: {
+      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: 'next' }],
       semi: ['error', 'always'],
       quotes: ['error', 'single']
     }
