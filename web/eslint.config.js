@@ -20,7 +20,9 @@ export default tseslint.config([
       globals: globals.browser,
     },
     rules: {
-      "@typescript-eslint/no-empty-object-type": "off"
+      "@typescript-eslint/no-empty-object-type": "off",
+      quotes: ['error', 'single'],
+      semi: ['error', 'always']
     }
   },
 ])
